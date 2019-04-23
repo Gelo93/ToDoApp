@@ -1,0 +1,32 @@
+<div cdkDropList (cdkDropListDropped)="drop($event)" id="checklist-item-container">
+  <div cdkDrag class="checklist-item" *ngFor="let checklist of checklists; let i = index" [@flyInOut]="in">
+    <mat-checkbox color='primary' #i (change)="!i['checked']" [style.color]="i.checked ? 'rgba(0,0,0,.54)':'' ">
+      {{checklist.title}}
+    </mat-checkbox>
+    <div id="button-container">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="removeItem(checklist)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="add-to-do-container">
+  <div id="add-checkbox-field" [@checklistSlider]="inputSlider">
+    <mat-form-field class="form-field" flex style="width: -webkit-calc(100% - 170px)">
+      <input matInput type="text" placeholder="Please enter to-do Item" [(ngModel)]="value"
+        (keyup)="onKey(value, $event)">
+      <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" id="enter" (click)="submitToDo(value)">Enter</button>
+  </div>
+
+  <button mat-fab color="primary" id="to-do-button" (click)="toggleInput(); value=''">
+    <i class="material-icons">
+      add
+    </i>
+  </button>
+</div>
